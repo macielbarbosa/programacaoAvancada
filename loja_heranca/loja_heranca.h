@@ -74,8 +74,8 @@ private:
     Livro *x;
     unsigned N;
 public:
-    ListaLivro();
-    ~ListaLivro();
+    inline ListaLivro(){x=NULL; N=0};
+    inline ~ListaLivro(){if(N!=0) delete[] x;}
     void incluir(const Livro &L);
     void excluir(unsigned id);
     void imprimir() const;
@@ -90,8 +90,8 @@ private:
     CD *x;
     unsigned N;
 public:
-    ListaCD();
-    ~ListaCD();
+    inline ListaCD(){x=NULL; N=0};
+    inline ~ListaCD(){if(N!=0) delete[] x;}
     void incluir(const CD &c);
     void excluir(unsigned id);
     void imprimir() const;
@@ -106,8 +106,8 @@ private:
     DVD *x;
     unsigned N;
 public:
-    ListaDVD();
-    ~ListaDVD();
+    inline ListaDVD(){x=NULL; N=0};
+    inline ~ListaDVD(){if(N!=0) delete[] x;}
     void incluir(const DVD &d);
     void excluir(unsigned id);
     void imprimir() const;
