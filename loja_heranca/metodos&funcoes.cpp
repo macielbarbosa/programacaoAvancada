@@ -14,42 +14,46 @@ istream & Produto::digitar(istream &I)
     while(preco<0);
 }
 
-ostream & Produto::imprimir(ostream &O)
+ostream & Produto::imprimir(ostream &O) const
 {
     O << '"' << nome << "\";$" << preco/100 << '.' << preco%100;
+    return O;
 }
 
 istream & Produto::ler(istream &I)
 {
-    unsigned float aux;
+    float aux;
     I.ignore(numeric_limits<streamsize>::max(),'"');
     getline(I,nome,'"');
     I.ignore(numeric_limits<streamsize>::max(),'$');
     I >> aux;
-    preco = int(aux*1000);
+    preco = (int)aux*1000;
+    return I;
 }
 
-istream Livro::digitar(istream &I)
+istream & Livro::digitar(istream &I)
 {
     Produto::digitar(I);
     cout << "Autor do livro: ";
     I >> autor;
 }
 
-ostream & Livro::imprimir(ostream &O)
+ostream & Livro::imprimir(ostream &O) const
 {
     Produto::imprimir(O);
     O << ";\"" << autor << '"';
+    return O;
 }
 
 istream & Livro::ler(istream &I)
 {
     Produto::ler(I);
     I.ignore(numeric_limits<streamsize>::max(),'"');
-    getline(autor,'"');
+    getline(I,autor,'"');
+    return I;
 }
 
-istream CD::digitar(istream &I)
+istream & CD::digitar(istream &I)
 {
     Produto::digitar(I);
     do
@@ -62,10 +66,11 @@ istream CD::digitar(istream &I)
     while(faixas<=0);
 }
 
-ostream & CD::imprimir(ostream &O)
+ostream & CD::imprimir(ostream &O) const
 {
     Produto::imprimir(O);
     O << ";" << faixas;
+    return O;
 }
 
 istream & CD::ler(istream &I)
@@ -73,9 +78,10 @@ istream & CD::ler(istream &I)
     Produto::ler(I);
     I.ignore(numeric_limits<streamsize>::max(),';');
     I >> faixas;
+    return I;
 }
 
-istream DVD::digitar(istream &I)
+istream & DVD::digitar(istream &I)
 {
     Produto::digitar(I);
     do
@@ -88,10 +94,11 @@ istream DVD::digitar(istream &I)
     while(duracao<=0);
 }
 
-ostream & DVD::imprimir(ostream &O)
+ostream & DVD::imprimir(ostream &O) const
 {
     Produto::imprimir(O);
     O << ";" << duracao;
+    return O;
 }
 
 istream & DVD::ler(istream &I)
@@ -99,6 +106,7 @@ istream & DVD::ler(istream &I)
     Produto::ler(I);
     I.ignore(numeric_limits<streamsize>::max(),';');
     I >> duracao;
+    return I;
 }
 
 void ListaLivro::incluir(const Livro &L)
@@ -124,20 +132,20 @@ void ListaLivro::excluir(unsigned id)
         if(i<id)
             aux[i]=x[i];
         else
-            aux[i]=x[i+1]
+            aux[i]=x[i+1];
     }
     N--;
     delete[] x;
     x = aux;
 }
 
-void ListaLivro::imprimir(void)
+void ListaLivro::imprimir(void) const
 {
     cout << "LISTALIVRO " << N << endl;
     for(unsigned i=0; i<N; i++)
     {
         cout << i << ") L: ";
-        x[i].imprimir();
+        x[i].imprimir(cout);
         cout << endl;
     }
 }
@@ -151,11 +159,11 @@ void ListaLivro::ler(istream &I)
         return;
     }
     I >> N;
-    for(unsigned i=0; i<n; i++)
+    for(unsigned i=0; i<N; i++)
         x[i].ler(I);
 }
 
-void ListaLivro::salvar(ostream &O)
+void ListaLivro::salvar(ostream &O) const
 {
     O << "LISTALIVRO " << N << endl;
     for(unsigned i=0; i<N; i++){
@@ -186,20 +194,20 @@ void ListaCD::excluir(unsigned id)
         if(i<id)
             aux[i]=x[i];
         else
-            aux[i]=x[i+1]
+            aux[i]=x[i+1];
     }
     N--;
     delete[] x;
     x = aux;
 }
 
-void ListaCD::imprimir(void)
+void ListaCD::imprimir(void) const
 {
     cout << "LISTACD " << N << endl;
     for(unsigned i=0; i<N; i++)
     {
         cout << i << ") C: ";
-        x[i].imprimir();
+        x[i].imprimir(cout);
         cout << endl;
     }
 }
@@ -213,11 +221,11 @@ void ListaCD::ler(istream &I)
         return;
     }
     I >> N;
-    for(unsigned i=0; i<n; i++)
+    for(unsigned i=0; i<N; i++)
         x[i].ler(I);
 }
 
-void ListaCD::salvar(ostream &O)
+void ListaCD::salvar(ostream &O) const
 {
     O << "LISTACD " << N << endl;
     for(unsigned i=0; i<N; i++){
@@ -248,20 +256,20 @@ void ListaDVD::excluir(unsigned id)
         if(i<id)
             aux[i]=x[i];
         else
-            aux[i]=x[i+1]
+            aux[i]=x[i+1];
     }
     N--;
     delete[] x;
     x = aux;
 }
 
-void ListaDVD::imprimir(void)
+void ListaDVD::imprimir(void) const
 {
     cout << "LISTADVD " << N << endl;
     for(unsigned i=0; i<N; i++)
     {
         cout << i << ") D: ";
-        x[i].imprimir();
+        x[i].imprimir(cout);
         cout << endl;
     }
 }
@@ -275,11 +283,11 @@ void ListaDVD::ler(istream &I)
         return;
     }
     I >> N;
-    for(unsigned i=0; i<n; i++)
+    for(unsigned i=0; i<N; i++)
         x[i].ler(I);
 }
 
-void ListaDVD::salvar(ostream &O)
+void ListaDVD::salvar(ostream &O) const
 {
     O << "LISTADVD " << N << endl;
     for(unsigned i=0; i<N; i++){
@@ -289,7 +297,7 @@ void ListaDVD::salvar(ostream &O)
 
 void Loja::ler(const char* arq)
 {
-    ifstream arquivo(arq.c_str());
+    ifstream arquivo(arq);
     if(!arquivo.is_open())
     {
         cerr << "Erro na leitura do arquivo" << endl;
@@ -300,9 +308,9 @@ void Loja::ler(const char* arq)
     LD.ler(arquivo);
 }
 
-void Loja::salvar(const char* arq)
+void Loja::salvar(const char* arq) const
 {
-    ofstream arquivo(arq.c_str());
+    ofstream arquivo(arq);
     if(!arquivo.is_open())
     {
         cerr << "Erro na leitura do arquivo" << endl;
