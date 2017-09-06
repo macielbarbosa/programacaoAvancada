@@ -5,7 +5,7 @@
 	<limits>
 	"loja_heranca.h"
 
-1504720639 c:\users\macielbarbosa\documents\programacaoavancada\loja_heranca\loja_heranca.h
+1504720825 c:\users\macielbarbosa\documents\programacaoavancada\loja_heranca\loja_heranca.h
 	<iostream>
 	<string>
 	<fstream>
@@ -24,4 +24,7 @@
 	<limits>
 
 1504722332 source:c:\users\labinfo\documents\programacaoavancada\loja_heranca\metodos&funcoes.cpp
+
+1504725902 source:c:\users\macielbarbosa\documents\programacaoavancada\loja_heranca\metodos&funcoes.cpp
+	"loja_heranca.h"
 
