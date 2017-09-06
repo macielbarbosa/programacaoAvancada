@@ -1,11 +1,17 @@
 #include "loja_heranca.h"
 
-istream Produto::digitar(istream &I)
+istream & Produto::digitar(istream &I)
 {
     cout << "Nome do produto: ";
     I >> nome;
-    cout << "Preco do produto: ";
-    I >> preco;
+    do
+    {
+        cout << "Preco do produto: ";
+        I >> preco;
+        if(preco<0)
+            cout << "Insira o preco positivo" << endl;
+    }
+    while(preco<0);
 }
 
 ostream & Produto::imprimir(ostream &O)
@@ -46,8 +52,14 @@ istream & Livro::ler(istream &I)
 istream CD::digitar(istream &I)
 {
     Produto::digitar(I);
-    cout << "Quantidade de faixas: ";
-    I >> faixas;
+    do
+    {
+        cout << "Quantidade de faixas: ";
+        I >> faixas;
+        if(faixas<=0)
+            cout << "Insira a quantidade de faixas maior que zero" << endl;
+    }
+    while(faixas<=0);
 }
 
 ostream & CD::imprimir(ostream &O)
@@ -66,8 +78,14 @@ istream & CD::ler(istream &I)
 istream DVD::digitar(istream &I)
 {
     Produto::digitar(I);
-    cout << "Duracao: ";
-    I >> duracao;
+    do
+    {
+        cout << "Duracao: ";
+        I >> duracao;
+        if(duracao<=0)
+            cout << "Insira a duracao maior que zero" << endl;
+    }
+    while(duracao<=0);
 }
 
 ostream & DVD::imprimir(ostream &O)
@@ -113,29 +131,36 @@ void ListaLivro::excluir(unsigned id)
     x = aux;
 }
 
-void ListaLivro::imprimir()
+void ListaLivro::imprimir(void)
 {
     cout << "LISTALIVRO " << N << endl;
     for(unsigned i=0; i<N; i++)
     {
         cout << i << ") L: ";
-        cout << Livro[i] << endl;
+        x[i].imprimir();
+        cout << endl;
     }
 }
 
 void ListaLivro::ler(istream &I)
 {
-    cout << "Tamanho da lista de livros: ";
-    cin >> N;
-    for(unsigned i=0; i<N; i++)
-    {
-        cin >> Livro[i];
+    string str;
+    I >> str;
+    if(str!="LISTALIVRO"){
+        cerr << "Nao eh uma lista de livros" << endl;
+        return;
     }
+    I >> N;
+    for(unsigned i=0; i<n; i++)
+        x[i].ler(I);
 }
 
 void ListaLivro::salvar(ostream &O)
 {
-
+    O << "LISTALIVRO " << N << endl;
+    for(unsigned i=0; i<N; i++){
+        x[i].salvar(O);
+    }
 }
 
 void ListaCD::incluir(const CD &c)
@@ -168,29 +193,36 @@ void ListaCD::excluir(unsigned id)
     x = aux;
 }
 
-void ListaCD::imprimir()
+void ListaCD::imprimir(void)
 {
     cout << "LISTACD " << N << endl;
     for(unsigned i=0; i<N; i++)
     {
         cout << i << ") C: ";
-        cout << CD[i] << endl;
+        x[i].imprimir();
+        cout << endl;
     }
 }
 
 void ListaCD::ler(istream &I)
 {
-    cout << "Tamanho da lista de CDs: ";
-    cin >> N;
-    for(unsigned i=0; i<N; i++)
-    {
-        cin >> CD[i];
+    string str;
+    I >> str;
+    if(str!="LISTACD"){
+        cerr << "Nao eh uma lista de livros" << endl;
+        return;
     }
+    I >> N;
+    for(unsigned i=0; i<n; i++)
+        x[i].ler(I);
 }
 
 void ListaCD::salvar(ostream &O)
 {
-
+    O << "LISTACD " << N << endl;
+    for(unsigned i=0; i<N; i++){
+        x[i].salvar(O);
+    }
 }
 
 void ListaDVD::incluir(const DVD &d)
@@ -223,27 +255,60 @@ void ListaDVD::excluir(unsigned id)
     x = aux;
 }
 
-void ListaDVD::imprimir()
+void ListaDVD::imprimir(void)
 {
     cout << "LISTADVD " << N << endl;
     for(unsigned i=0; i<N; i++)
     {
         cout << i << ") D: ";
-        cout << DVD[i] << endl;
+        x[i].imprimir();
+        cout << endl;
     }
 }
 
 void ListaDVD::ler(istream &I)
 {
-    cout << "Tamanho da lista de DVDs: ";
-    cin >> N;
-    for(unsigned i=0; i<N; i++)
-    {
-        cin >> DVD[i];
+    string str;
+    I >> str;
+    if(str!="LISTADVD"){
+        cerr << "Nao eh uma lista de livros" << endl;
+        return;
     }
+    I >> N;
+    for(unsigned i=0; i<n; i++)
+        x[i].ler(I);
 }
 
 void ListaDVD::salvar(ostream &O)
 {
+    O << "LISTADVD " << N << endl;
+    for(unsigned i=0; i<N; i++){
+        x[i].salvar(O);
+    }
+}
 
+void Loja::ler(const char* arq)
+{
+    ifstream arquivo(arq.c_str());
+    if(!arquivo.is_open())
+    {
+        cerr << "Erro na leitura do arquivo" << endl;
+        return;
+    }
+    LL.ler(arquivo);
+    LC.ler(arquivo);
+    LD.ler(arquivo);
+}
+
+void Loja::salvar(const char* arq)
+{
+    ofstream arquivo(arq.c_str());
+    if(!arquivo.is_open())
+    {
+        cerr << "Erro na leitura do arquivo" << endl;
+        return;
+    }
+    LL.salvar(arquivo);
+    LC.salvar(arquivo);
+    LD.salvar(arquivo);
 }

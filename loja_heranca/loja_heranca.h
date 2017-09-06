@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <limits>
 
 using namespace std;
 
@@ -74,11 +76,11 @@ private:
     Livro *x;
     unsigned N;
 public:
-    inline ListaLivro(){x=NULL; N=0};
+    inline ListaLivro(){x=NULL; N=0;}
     inline ~ListaLivro(){if(N!=0) delete[] x;}
     void incluir(const Livro &L);
     void excluir(unsigned id);
-    void imprimir() const;
+    void imprimir(void) const;
     void ler(istream &I);
     void salvar(ostream &O) const;
 };
@@ -90,11 +92,11 @@ private:
     CD *x;
     unsigned N;
 public:
-    inline ListaCD(){x=NULL; N=0};
+    inline ListaCD(){x=NULL; N=0;}
     inline ~ListaCD(){if(N!=0) delete[] x;}
     void incluir(const CD &c);
     void excluir(unsigned id);
-    void imprimir() const;
+    void imprimir(void) const;
     void ler(istream &I);
     void salvar(ostream &O) const;
 };
@@ -106,11 +108,11 @@ private:
     DVD *x;
     unsigned N;
 public:
-    inline ListaDVD(){x=NULL; N=0};
+    inline ListaDVD(){x=NULL; N=0;}
     inline ~ListaDVD(){if(N!=0) delete[] x;}
     void incluir(const DVD &d);
     void excluir(unsigned id);
-    void imprimir() const;
+    void imprimir(void) const;
     void ler(istream &I);
     void salvar(ostream &O) const;
 };
