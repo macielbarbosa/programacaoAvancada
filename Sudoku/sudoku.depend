@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1493925537 source:c:\users\c6-prof\downloads\sudoku_incompleto\console.cpp
+	<iostream>
+	<windows.h>
+	"console.h"
+
+1493925701 c:\users\c6-prof\downloads\sudoku_incompleto\console.h
+
+1493926100 source:c:\users\c6-prof\downloads\sudoku_incompleto\sudoku_main.cpp
+	<iostream>
+	<cstdlib>
+	"console.h"
+	"sudoku.h"
+
+1507239126 c:\users\c6-prof\downloads\sudoku_incompleto\sudoku.h
+	<stack>
+
