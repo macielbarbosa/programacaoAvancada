@@ -15,3 +15,27 @@
 1507239126 c:\users\c6-prof\downloads\sudoku_incompleto\sudoku.h
 	<stack>
 
+1507518227 source:c:\users\jessa\documents\programacaoavancada\sudoku\console.cpp
+	<iostream>
+	<windows.h>
+	"console.h"
+
+1507518382 c:\users\jessa\documents\programacaoavancada\sudoku\console.h
+
+1507531638 source:c:\users\jessa\documents\programacaoavancada\sudoku\sudoku_main.cpp
+	<iostream>
+	<cstdlib>
+	"console.h"
+	"sudoku.h"
+
+1507529680 c:\users\jessa\documents\programacaoavancada\sudoku\sudoku.h
+	<stack>
+
+1507533435 source:c:\users\jessa\documents\programacaoavancada\sudoku\sudoku.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<conio.h>
+	"console.h"
+	"sudoku.h"
+

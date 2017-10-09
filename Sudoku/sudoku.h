@@ -5,6 +5,10 @@
 
 using namespace std;
 
+struct Casa{
+  uint8_t i, j;
+};
+
 // Imprime msg e espera que o usuario digite uma tecla
 void espera_tecla();
 // Desenha as linhas dos tabuleiros direito e esquerdo
@@ -33,6 +37,7 @@ class Sudoku
 private:
   // Matriz que contem os valores das casas do tabuleiro
   uint8_t x[9][9];
+  Casa prox_casa_vazia;
 public:
   // Cria um tabuleiro com o conteudo do arquivo nome_arq
   // Caso nao consiga ler do arquivo, cria tabuleiro vazio
@@ -46,13 +51,15 @@ public:
   // Testa se a jogada J eh possivel para o tabuleiro
   bool jogada_valida(Jogada J) const;
   // Executa uma jogada (altera o tabuleiro)
-  inline void fazer_jogada(Jogada J) {if (jogada_valida(J)) x[J.i][J.j] = J.v;}
+  void fazer_jogada(Jogada J);
   // Testa se o tabuleiro estah completo (fim de jogo)
   bool fim_de_jogo() const;
   // Retorna o numero de casas vazias no tabuleiro
   unsigned num_casas_vazias() const;
   // Determina automaticamente a solucao do tabuleiro (preenche as casas vazias)
   void resolver(void);
+  //Determina qual é a proxima casa vazia
+  void prox_vazia(void);
 };
 
 #endif // _SUDOKU_H_

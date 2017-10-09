@@ -7,7 +7,7 @@ using namespace std;
 
 int main(void)
 {
-  Sudoku Origem,S;
+  Sudoku Origem("muito-dificil.txt"),S;
   Jogada J;
 
   if (!Term.formatado())

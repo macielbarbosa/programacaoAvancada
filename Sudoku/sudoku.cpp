@@ -160,6 +160,7 @@ bool Jogada::fim_de_jogo() const
 // Caso nao consiga ler do arquivo, cria tabuleiro vazip
 Sudoku::Sudoku(const char *nome_arq)
 {
+  bool casa_vazia=false;
   for (unsigned i=0; i<9; i++) for (unsigned j=0; j<9; j++)
   {
     x[i][j] = 0;
@@ -181,15 +182,14 @@ Sudoku::Sudoku(const char *nome_arq)
       Jogada J(i,j,valor);
       if (jogada_valida(J)) x[i][j] = valor;
     }
+    else if(!casa_vazia){
+      prox_casa_vazia.i = i;
+      prox_casa_vazia.j = j;
+      casa_vazia = true;
+    }
+
   }
   arq.close();
-}
-
-Sudoku::Sudoku(const Sudoku &S){
-  for (unsigned i=0; i<9; i++) for (unsigned j=0; j<9; j++)
-  {
-    x[i][j] = S.x[i][j];
-  }
 }
 
 // Imprime o conteudo do tabuleiro na tela
@@ -262,6 +262,14 @@ bool Sudoku::jogada_valida(Jogada J) const
   return true;
 }
 
+void Sudoku::fazer_jogada(Jogada J)
+{
+  if (jogada_valida(J)){
+      x[J.i][J.j] = J.v;
+      if(prox_casa_vazia.i==J.i && prox_casa_vazia.j==J.j)
+        this->prox_vazia();
+  }
+}
 // Testa se o tabuleiro estah completo (fim de jogo)
 bool Sudoku::fim_de_jogo() const
 {
@@ -287,30 +295,67 @@ unsigned Sudoku::num_casas_vazias() const
 void Sudoku::resolver(void)
 {
   stack <Sudoku> sucessores;
-  Sudoku analizado;
-  int testados = 0, i=0, j;
-  bool solucao = false, parar;
+  Sudoku analizado, inserido;
+  int testados = 0;
+  uint8_t i, j;
+  bool solucao = false;
   Term.gotoYX(20,4);
   Term.limpar_linha();
   sucessores.push(*this);
-  while(sucessores.size()!=0 && solucao==false){
+
+  do
+  {
     analizado = sucessores.top();
     sucessores.pop();
-    parar = false;
-    //determina as proximas coordenadas vazias
-    for ( ; i<9 && !parar; i++) for (j=0 ; j<9 && !parar; j++)
-    {
-      if (analizado.x[i][j] == 0)
-        parar = true;
-    }
-    for(unsigned v=9; v>0; v--){
-      Jogada jog(i,j,v);
-      if(analizado.jogada_valida(jog)){
-        analizado.fazer_jogada(jog);
-        sucessores.push(analizado);
+    testados++;
+    if(analizado.fim_de_jogo())
+      solucao=true;
+    else{
+      i = analizado.prox_casa_vazia.i;
+      j = analizado.prox_casa_vazia.j;
+      for(unsigned v=9; v>0; v--){
+        Jogada jog(i,j,v);
+        if(analizado.jogada_valida(jog)){
+          inserido = analizado;
+          inserido.fazer_jogada(jog);
+          sucessores.push(inserido);
+        }
       }
     }
+    if(solucao){
+      *this = analizado;
+      cout << "\nSOLUCAO\n\n";
+    }
+    else
+      cout << "\nSudoku Analizado:\n\n";
+    analizado.imprimir();
+    cout << "\n\nNumero de testes: " << testados << endl;
+    cout << "Numero de sucessores: " << sucessores.size() << "\n\n";
+  }
+  while(sucessores.size()!=0 && solucao==false);
+  if (!solucao)
+    cout << "\nSudoku sem solucao\nNumero de testados: " << testados << endl;
+}
 
-    if(sucessores.top().fim_de_jogo()) solucao=true;
+Sudoku::Sudoku(const Sudoku &S){
+  prox_casa_vazia.i = S.prox_casa_vazia.i;
+  prox_casa_vazia.j = S.prox_casa_vazia.j;
+  for (uint8_t i=0; i<9; i++) for (uint8_t j=0; j<9; j++) x[i][j] = S.x[i][j];
+}
+
+void Sudoku::prox_vazia(void){
+  if(this->fim_de_jogo()){
+      return;
+  }
+  uint8_t j = prox_casa_vazia.j;
+  for(uint8_t i=prox_casa_vazia.i; i<9; i++){
+    for( ; j<9; j++){
+      if (x[i][j] == 0){
+          prox_casa_vazia.i = i;
+          prox_casa_vazia.j = j;
+          return;
+      }
+    }
+    j = 0;
   }
 }
