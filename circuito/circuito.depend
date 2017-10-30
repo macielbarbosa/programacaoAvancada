@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1509385963 source:c:\users\maciel\documents\repositorios\programacaoavancada\circuito\circuito-main.cpp
+	<iostream>
+	<string>
+	"circuito_STL.h"
+
+1509383537 c:\users\maciel\documents\repositorios\programacaoavancada\circuito\circuito_stl.h
+	<iostream>
+	<vector>
+

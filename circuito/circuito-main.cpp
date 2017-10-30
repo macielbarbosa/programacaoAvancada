@@ -1,12 +1,17 @@
 #include <iostream>
 #include <string>
-#include "circuito.h"
+#include "circuito_STL.h"
 
 using namespace std;
 
 int main(void)
 {
-  Circuito C;
+  //Porta_AND p1();
+  //Porta_AND p2;
+  //p2 = p1;
+  //cout << p2.getNumInputs();
+
+  /*Circuito C;
   string nome;
   int opcao;
 
@@ -56,5 +61,5 @@ int main(void)
     default:
       break;
     }
-  } while(opcao != 0);
+  } while(opcao != 0);*/
 }
