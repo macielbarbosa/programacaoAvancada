@@ -21,6 +21,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="circuito-main.cpp" />
+		<Unit filename="circuito_STL.cpp" />
 		<Unit filename="circuito_STL.h" />
 		<Extensions>
 			<code_completion />
