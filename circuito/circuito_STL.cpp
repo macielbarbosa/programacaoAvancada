@@ -56,13 +56,13 @@ void Circuito::limpar(){
 }
 
 void Circuito::digitar(){
-  cout << "Número de entradas: ";
+  cout << "NÃºmero de entradas: ";
   cin >> Nin;
   digitarEntradas();
-  cout << "Número de saidas: ";
+  cout << "NÃºmero de saidas: ";
   cin >> Nout;
   digitarSaidas();
-  cout << "Número de portas: ";
+  cout << "NÃºmero de portas: ";
   cin >> Nportas;
   digitarPortas();
 }
@@ -144,9 +144,21 @@ void Circuito::digitarPortas(){
 }
 
 void Circuito::ler(const char *c){
+  int id;
+  this->~Circuito();
   ifstream arq(c);
+  string str_aux;
   if(arq.is_open()){
-    return;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(arq, str_aux, ':');
+    if(str_aux!="CIRCUITO"){
+        cerr << "Formato de arquivo nao aceito" << endl;
+        return;
+    }
+    arq >> Nin >> Nout >> Nportas;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    arq >> id;
   }
   else{
     cerr << "Erro na abertura do arquivo" << endl;
