@@ -1,4 +1,5 @@
 #include "circuito_STL.h"
+#include <vector>
 
 Porta::Porta(unsigned NI){
   Nin = NI;
@@ -34,50 +35,120 @@ void Circuito::copiar(const Circuito &C){
   Nportas = C.Nportas;
   inputs = C.inputs;
   id_out = C.id_out;
-  portas = C.portas;
+  for(unsigned i=0; i<Nportas; i++){
+    ptr_Porta paux;
+    *paux = *(C.portas[i]);
+    portas.push_back(paux);
+  }
+}
+
+void Circuito::alocar(unsigned NI, unsigned NO, unsigned NP){
+  return;
 }
 
 void Circuito::limpar(){
   Nin = 0;
   Nout = 0;
   Nportas = 0;
-  inputs.erase();
-  id_out.erase();
-  portas.erase();
+  inputs.clear();
+  id_out.clear();
+  portas.clear();
 }
 
 void Circuito::digitar(){
-  string str;
   cout << "Número de entradas: ";
   cin >> Nin;
+  digitarEntradas();
   cout << "Número de saidas: ";
   cin >> Nout;
+  digitarSaidas();
   cout << "Número de portas: ";
-  cin >> NPortas;
+  cin >> Nportas;
+  digitarPortas();
+}
+
+void Circuito::digitarEntradas(){
+  bool_3S b3s;
+  string aux;
+  for(unsigned i=0; i<Nin; i++){
+    cout << "Entrada " << i+1 << " por extenso (capslock): ";
+    cin >> aux;
+    if(aux=="FALSE_3S")
+      b3s = FALSE_3S;
+    else if(aux=="TRUE_3S")
+      b3s = TRUE_3S;
+    else if(aux=="UNDEF_3S")
+      b3s = UNDEF_3S;
+    inputs.push_back(b3s);
+  }
+}
+
+void Circuito::digitarSaidas(){
+  int saida_aux;
+  for(unsigned i=0; i<Nout; i++){
+    cout << "ID da saida " << i+1 << " : ";
+    cin >> saida_aux;
+    id_out.push_back(saida_aux);
+  }
+}
+
+void Circuito::digitarPortas(){
+  string str;
   for(unsigned i=0; i<Nportas; i++){
-    cout << "Tipo de porta(Capslock): "
+    cout << "Tipo de porta " << i+1 << " (Capslock): ";
     cin >> str;
-    switch (str){
-    case 'NOT':
+    if(str=="NOT"){
+      ptr_Porta paux;
+      *paux = Porta_NOT();
+      paux->digitar();
+      portas.push_back(paux);
+    }
+    else if(str=="AND"){
+      ptr_Porta paux;
+      *paux = Porta_AND();
+      paux->digitar();
+      portas.push_back(paux);
+    }
+    else if(str=="NAND"){
+      ptr_Porta paux;
+      *paux = Porta_NAND();
+      paux->digitar();
+      portas.push_back(paux);
+    }
+    else if(str=="OR"){
+      ptr_Porta paux;
+      *paux = Porta_OR();
+      paux->digitar();
+      portas.push_back(paux);
+    }
+    else if(str=="NOR"){
+      ptr_Porta paux;
+      *paux = Porta_NOR();
+      paux->digitar();
+      portas.push_back(paux);
+    }
+    else if(str=="XOR"){
+      ptr_Porta paux;
+      *paux = Porta_XOR();
+      paux->digitar();
+      portas.push_back(paux);
       break;
     }
-    case 'AND':
-      break;
+    else if(str=="NXOR"){
+      ptr_Porta paux;
+      *paux = Porta_NXOR();
+      paux->digitar();
+      portas.push_back(paux);
     }
-    case 'NAND':
-      break;
-    }
-    case 'OR':
-      break;
-    }
-    case 'NOR':
-      break;
-    }
-    case 'XOR':
-      break;
-    }
-    case 'NXOR':
-      break;
-    }
+  }
+}
+
+void Circuito::ler(const char *c){
+  ifstream arq(c);
+  if(arq.is_open()){
+    return;
+  }
+  else{
+    cerr << "Erro na abertura do arquivo" << endl;
   }
 }

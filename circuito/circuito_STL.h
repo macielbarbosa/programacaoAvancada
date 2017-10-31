@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -160,8 +161,14 @@ public:
   // Abre a stream e depois chama o metodo imprimir
   void salvar(const char *) const;
   // Solicita ao usuario que digite os valores das entradas do circuito, que sao
-  // as variaveis inputs[i], i de 0 a Nin-1
+  // as variaveis id_out[i], i de 0 a Nout-1
   void digitarEntradas();
+  // Solicita ao usuario que digite o ID das portas de saida do circuito, que sao
+  // as variaveis inputs[i], i de 0 a Nin-1
+  void digitarSaidas();
+  // Solicita ao usuario que digite as portas do circuito, que sao
+  // as variaveis portas[i], i de 0 a Nportas-1
+  void digitarPortas();
   // Imprime em tela os valores das variaveis inputs[i]
   void imprimirEntradas(void) const;
   // Imprime em tela os valores das saidas das portas ou das entradas do circuito que estao conectadas

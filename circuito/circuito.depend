@@ -4,9 +4,10 @@
 	<string>
 	"circuito_STL.h"
 
-1509383537 c:\users\maciel\documents\repositorios\programacaoavancada\circuito\circuito_stl.h
+1509450793 c:\users\maciel\documents\repositorios\programacaoavancada\circuito\circuito_stl.h
 	<iostream>
 	<vector>
+	<string>
 
 1509427115 source:c:\users\jessa\documents\programacaoavancada\circuito\circuito-main.cpp
 	<iostream>
